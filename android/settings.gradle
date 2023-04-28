@@ -1,0 +1,2 @@
+rootProject.name = 'flutter_rtsp_client'
+include ':rtsp'
