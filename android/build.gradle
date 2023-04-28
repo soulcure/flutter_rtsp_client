@@ -2,24 +2,31 @@ group 'com.skyfend.rtsp.flutter_rtsp_client1'
 version '1.0'
 
 buildscript {
+    ext {
+        kotlin_version = '1.8.21'
+    }
     repositories {
         google()
+        maven { url 'https://jitpack.io' }
         mavenCentral()
     }
 
     dependencies {
         classpath 'com.android.tools.build:gradle:7.2.0'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }
 
 rootProject.allprojects {
     repositories {
         google()
+        maven { url 'https://jitpack.io' }
         mavenCentral()
     }
 }
 
 apply plugin: 'com.android.library'
+apply plugin: 'org.jetbrains.kotlin.android'
 
 android {
     compileSdkVersion 31
@@ -35,18 +42,17 @@ android {
 }
 
 
-
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation fileTree(dir: 'libs', include: ['*.aar'])
 
     //implementation project(path: ':rtsp')
 
+    implementation 'com.github.alexeyvasilyev:rtsp-client-android:2.0.8'
+
     implementation 'androidx.appcompat:appcompat:1.4.1'
     implementation 'com.google.android.material:material:1.5.0'
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.8.10"
-
-    implementation 'com.github.alexeyvasilyev:rtsp-client-android:2.0.8'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
 
     testImplementation 'junit:junit:4.13.2'
