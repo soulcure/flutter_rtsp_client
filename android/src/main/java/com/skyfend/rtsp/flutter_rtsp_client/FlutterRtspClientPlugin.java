@@ -30,11 +30,14 @@ public class FlutterRtspClientPlugin implements FlutterPlugin, ActivityAware {
             flutterPluginBinding.getPlatformViewRegistry()
                     .registerViewFactory(VIEW_TYPE, flutterRtspPlayerFactory);
         }
+        startListening();
 
     }
 
     @Override
     public void onDetachedFromEngine(@NonNull FlutterPluginBinding binding) {
+        stopListening();
+        flutterPluginBinding = null;
     }
 
     @Override
@@ -55,5 +58,18 @@ public class FlutterRtspClientPlugin implements FlutterPlugin, ActivityAware {
     @Override
     public void onDetachedFromActivity() {
 
+    }
+
+
+    private static void startListening() {
+        if (flutterRtspPlayerFactory != null)
+            flutterRtspPlayerFactory.start();
+    }
+
+    private static void stopListening() {
+        if (flutterRtspPlayerFactory != null) {
+            flutterRtspPlayerFactory.stop();
+            flutterRtspPlayerFactory = null;
+        }
     }
 }

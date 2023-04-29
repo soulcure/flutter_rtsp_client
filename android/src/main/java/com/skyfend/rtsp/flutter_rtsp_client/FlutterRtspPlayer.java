@@ -32,13 +32,17 @@ class FlutterRtspPlayer implements PlatformView {
     }
 
 
-    public void initialize(List<String> options) {
-        Uri uri = Uri.parse("rtsps://10.0.1.3/test.sdp");
+    public void start(ApiMessage input) {
+        Uri uri = Uri.parse("rtsp://192.168.0.105:8554/video");
         String username = "admin";
         String password = "Autel123";
         rtspSurfaceView.init(uri, username, password);
         rtspSurfaceView.start(true, false);
 
+    }
+
+    public void stop() {
+        rtspSurfaceView.stop();
     }
 
 }

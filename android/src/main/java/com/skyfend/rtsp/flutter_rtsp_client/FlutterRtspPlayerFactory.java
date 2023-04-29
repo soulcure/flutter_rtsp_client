@@ -4,6 +4,11 @@ import android.content.Context;
 
 import androidx.annotation.NonNull;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import io.flutter.plugin.common.BasicMessageChannel;
 import io.flutter.plugin.common.BinaryMessenger;
 import io.flutter.plugin.common.StandardMessageCodec;
 import io.flutter.plugin.platform.PlatformView;
@@ -27,6 +32,8 @@ class FlutterRtspPlayerFactory extends PlatformViewFactory {
     private final KeyForAssetAndPackageName keyForAssetAndPackageName;
     //
 
+    private FlutterRtspPlayer flutterRtspPlayer;
+
     public FlutterRtspPlayerFactory(BinaryMessenger messenger,
                                     TextureRegistry textureRegistry,
                                     KeyForAssetFn keyForAsset,
@@ -41,8 +48,26 @@ class FlutterRtspPlayerFactory extends PlatformViewFactory {
     @NonNull
     @Override
     public PlatformView create(Context context, int viewId, Object args) {
-//        Map<String, Object> params = (Map<String, Object>) args;
-        return new FlutterRtspPlayer(context, viewId, args);
+        if (flutterRtspPlayer == null) {
+            flutterRtspPlayer = new FlutterRtspPlayer(context, viewId, args);
+        }
+        return flutterRtspPlayer;
     }
 
+    public void start() {
+        BasicMessageChannel<Object> channel =
+                new BasicMessageChannel<>(messenger, "flutter.video.RTspPlayerApi.initialize", new StandardMessageCodec());
+        channel.setMessageHandler((message, reply) -> {
+            Map<String, Object> wrapped = new HashMap<>();
+            @SuppressWarnings("ConstantConditions")
+            ApiMessage input = ApiMessage.fromMap((Map<String, Object>) message);
+            flutterRtspPlayer.start(input);
+            wrapped.put("result", null);
+            reply.reply(wrapped);
+        });
+    }
+
+    public void stop() {
+        flutterRtspPlayer.stop();
+    }
 }
