@@ -4,25 +4,29 @@ import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
-import 'flutter_rtsp_client_platform_impl.dart';
+import 'flutter_rtsp_client_platform.dart';
 
-abstract class FlutterRtspClientPlatform extends PlatformInterface {
+final FlutterRtspClientPlatformInterface rtspPlayerPlatform =
+    FlutterRtspClientPlatformInterface.instance..init();
+
+abstract class FlutterRtspClientPlatformInterface extends PlatformInterface {
   /// Constructs a FlutterRtspClientPlatform.
-  FlutterRtspClientPlatform() : super(token: _token);
+  FlutterRtspClientPlatformInterface() : super(token: _token);
 
   static final Object _token = Object();
 
-  static FlutterRtspClientPlatform _instance = FlutterRtspClientPlatformImpl();
+  static FlutterRtspClientPlatformInterface _instance =
+      FlutterRtspClientPlatform();
 
-  /// The default instance of [FlutterRtspClientPlatform] to use.
+  /// The default instance of [FlutterRtspClientPlatformInterface] to use.
   ///
-  /// Defaults to [FlutterRtspClientPlatformImpl].
-  static FlutterRtspClientPlatform get instance => _instance;
+  /// Defaults to [FlutterRtspClientPlatform].
+  static FlutterRtspClientPlatformInterface get instance => _instance;
 
   /// Platform-specific implementations should set this with their own
-  /// platform-specific class that extends [FlutterRtspClientPlatform] when
+  /// platform-specific class that extends [FlutterRtspClientPlatformInterface] when
   /// they register themselves.
-  static set instance(FlutterRtspClientPlatform instance) {
+  static set instance(FlutterRtspClientPlatformInterface instance) {
     PlatformInterface.verifyToken(instance, _token);
     _instance = instance;
   }

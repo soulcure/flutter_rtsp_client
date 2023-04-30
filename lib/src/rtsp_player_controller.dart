@@ -1,8 +1,9 @@
 import 'dart:async';
 
 import 'package:flutter/widgets.dart';
-import 'package:flutter_rtsp_client/src/rtsp_player_platform.dart';
 import 'package:flutter_rtsp_client/src/rtsp_player_value.dart';
+
+import 'flutter_rtsp_client_platform_interface.dart';
 
 class RtspPlayerController extends ValueNotifier<RtspPlayerValue> {
   /// Constructs a [VlcPlayerController] playing a video from obtained from
@@ -19,7 +20,7 @@ class RtspPlayerController extends ValueNotifier<RtspPlayerValue> {
   /// the [DataSourceType] of the original video.
   final String dataSource;
 
-  /// Initialize vlc player when the platform is ready automatically
+  /// Initialize rtsp player when the platform is ready automatically
   final bool autoInitialize;
 
   bool? _isReadyToInitialize;

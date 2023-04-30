@@ -7,7 +7,7 @@ import 'package:flutter_rtsp_client/src/video_player_api.dart';
 
 import 'flutter_rtsp_client_platform_interface.dart';
 
-class FlutterRtspClientPlatformImpl extends FlutterRtspClientPlatform {
+class FlutterRtspClientPlatform extends FlutterRtspClientPlatformInterface {
   final _api = VideoPlayerApi();
 
   @override

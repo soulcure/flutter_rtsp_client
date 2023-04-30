@@ -1,6 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_rtsp_client/src/rtsp_player_controller.dart';
-import 'package:flutter_rtsp_client/src/rtsp_player_platform.dart';
+
+import 'flutter_rtsp_client_platform_interface.dart';
 
 class FlutterRtspPlayer extends StatefulWidget {
   final RtspPlayerController controller;
