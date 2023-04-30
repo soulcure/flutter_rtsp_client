@@ -75,17 +75,14 @@ class _FlutterRtspPlayerState extends State<FlutterRtspPlayer>
 
     return AspectRatio(
       aspectRatio: widget.aspectRatio,
-      child: Offstage(
-        offstage: !_isInitialized,
-        child: rtspPlayerPlatform.buildView(
-          context,
-          widget.controller.onPlatformViewCreated,
-          creationParams: {
-            'url': 'rtsp://192.168.0.105:8554/video',
-            'username': 'admin',
-            'password': 'Autel123',
-          },
-        ),
+      child: rtspPlayerPlatform.buildView(
+        context,
+        widget.controller.onPlatformViewCreated,
+        creationParams: {
+          'url': 'rtsp://192.168.0.105:8554/video',
+          'username': 'admin',
+          'password': 'Autel123',
+        },
       ),
     );
   }
