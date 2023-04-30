@@ -57,6 +57,7 @@ class FlutterRtspPlayer implements PlatformView {
 
     @Override
     public void dispose() {
+        Log.d(TAG, "PlatformView dispose");
         stop();
     }
 
