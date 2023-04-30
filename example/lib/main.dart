@@ -32,6 +32,11 @@ class _MyAppState extends State<MyApp> {
           child: FlutterRtspPlayer(
             controller: controller,
             aspectRatio: 16 / 9,
+            creationParams: const {
+              'url': 'rtsp://192.168.0.105:8554/video',
+              'username': 'admin',
+              'password': 'Autel123',
+            },
           ),
         ),
       ),

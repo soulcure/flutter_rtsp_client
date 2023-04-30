@@ -6,6 +6,7 @@ import 'flutter_rtsp_client_platform_interface.dart';
 class FlutterRtspPlayer extends StatefulWidget {
   final RtspPlayerController controller;
   final double aspectRatio;
+  final Map<String, dynamic> creationParams;
 
   const FlutterRtspPlayer({
     Key? key,
@@ -15,6 +16,7 @@ class FlutterRtspPlayer extends StatefulWidget {
     /// This MUST be provided, however it could simply be (parentWidth / parentHeight) - where parentWidth and
     /// parentHeight are the width and height of the parent perhaps as defined by a LayoutBuilder.
     required this.aspectRatio,
+    required this.creationParams,
   }) : super(key: key);
 
   @override
@@ -78,11 +80,7 @@ class _FlutterRtspPlayerState extends State<FlutterRtspPlayer>
       child: rtspPlayerPlatform.buildView(
         context,
         widget.controller.onPlatformViewCreated,
-        creationParams: {
-          'url': 'rtsp://192.168.0.105:8554/video',
-          'username': 'admin',
-          'password': 'Autel123',
-        },
+        creationParams: widget.creationParams,
       ),
     );
   }
