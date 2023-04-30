@@ -13,21 +13,19 @@ import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding;
 public class FlutterRtspClientPlugin implements FlutterPlugin, ActivityAware {
 
     private static FlutterRtspPlayerFactory flutterRtspPlayerFactory;
-    private FlutterPluginBinding flutterPluginBinding;
     private static final String VIEW_TYPE = "flutter_video_plugin/getVideoView";
 
 
     @Override
     public void onAttachedToEngine(@NonNull FlutterPluginBinding binding) {
-        flutterPluginBinding = binding;
         if (flutterRtspPlayerFactory == null) {
             final FlutterInjector injector = FlutterInjector.instance();
             flutterRtspPlayerFactory = new FlutterRtspPlayerFactory(
-                    flutterPluginBinding.getBinaryMessenger(),
-                    flutterPluginBinding.getTextureRegistry(),
+                    binding.getBinaryMessenger(),
+                    binding.getTextureRegistry(),
                     injector.flutterLoader()::getLookupKeyForAsset,
                     injector.flutterLoader()::getLookupKeyForAsset);
-            flutterPluginBinding.getPlatformViewRegistry()
+            binding.getPlatformViewRegistry()
                     .registerViewFactory(VIEW_TYPE, flutterRtspPlayerFactory);
         }
         startListening();
@@ -37,7 +35,6 @@ public class FlutterRtspClientPlugin implements FlutterPlugin, ActivityAware {
     @Override
     public void onDetachedFromEngine(@NonNull FlutterPluginBinding binding) {
         stopListening();
-        flutterPluginBinding = null;
     }
 
     @Override
@@ -62,13 +59,13 @@ public class FlutterRtspClientPlugin implements FlutterPlugin, ActivityAware {
 
 
     private static void startListening() {
-        if (flutterRtspPlayerFactory != null)
-            flutterRtspPlayerFactory.start();
+        //if (flutterRtspPlayerFactory != null)
+        //flutterRtspPlayerFactory.start();
     }
 
     private static void stopListening() {
         if (flutterRtspPlayerFactory != null) {
-            flutterRtspPlayerFactory.stop();
+            //flutterRtspPlayerFactory.stop();
             flutterRtspPlayerFactory = null;
         }
     }

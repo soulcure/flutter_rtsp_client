@@ -26,7 +26,7 @@ class FlutterRtspPlayerFactory extends PlatformViewFactory {
         String get(String asset, String packageName);
     }
 
-    private final BinaryMessenger messenger;
+    private final BinaryMessenger binaryMessenger;
     private final TextureRegistry textureRegistry;
     private final KeyForAssetFn keyForAsset;
     private final KeyForAssetAndPackageName keyForAssetAndPackageName;
@@ -39,7 +39,7 @@ class FlutterRtspPlayerFactory extends PlatformViewFactory {
                                     KeyForAssetFn keyForAsset,
                                     KeyForAssetAndPackageName keyForAssetAndPackageName) {
         super(StandardMessageCodec.INSTANCE);
-        this.messenger = messenger;
+        this.binaryMessenger = messenger;
         this.textureRegistry = textureRegistry;
         this.keyForAsset = keyForAsset;
         this.keyForAssetAndPackageName = keyForAssetAndPackageName;
@@ -48,26 +48,26 @@ class FlutterRtspPlayerFactory extends PlatformViewFactory {
     @NonNull
     @Override
     public PlatformView create(Context context, int viewId, Object args) {
+        final Map<String, Object> creationParams = (Map<String, Object>) args;
         if (flutterRtspPlayer == null) {
-            flutterRtspPlayer = new FlutterRtspPlayer(context, viewId, args);
+            flutterRtspPlayer = new FlutterRtspPlayer(context, viewId, creationParams, binaryMessenger, textureRegistry);
         }
         return flutterRtspPlayer;
     }
 
-    public void start() {
-        BasicMessageChannel<Object> channel =
-                new BasicMessageChannel<>(messenger, "flutter.video.RTspPlayerApi.initialize", new StandardMessageCodec());
-        channel.setMessageHandler((message, reply) -> {
-            Map<String, Object> wrapped = new HashMap<>();
-            @SuppressWarnings("ConstantConditions")
-            ApiMessage input = ApiMessage.fromMap((Map<String, Object>) message);
-            flutterRtspPlayer.start(input);
-            wrapped.put("result", null);
-            reply.reply(wrapped);
-        });
-    }
-
-    public void stop() {
-        flutterRtspPlayer.stop();
-    }
+//    public void start() {
+//        BasicMessageChannel<Object> channel =
+//                new BasicMessageChannel<>(binaryMessenger, "flutter.video.RTspPlayerApi.initialize", new StandardMessageCodec());
+//        channel.setMessageHandler((message, reply) -> {
+//            Map<String, Object> wrapped = new HashMap<>();
+//            @SuppressWarnings("ConstantConditions")
+//            ApiMessage input = ApiMessage.fromMap((Map<String, Object>) message);
+//            wrapped.put("result", null);
+//            reply.reply(wrapped);
+//        });
+//    }
+//
+//    public void stop() {
+//        flutterRtspPlayer.stop();
+//    }
 }

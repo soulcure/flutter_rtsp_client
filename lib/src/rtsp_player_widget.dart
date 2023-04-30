@@ -80,6 +80,11 @@ class _FlutterRtspPlayerState extends State<FlutterRtspPlayer>
         child: rtspPlayerPlatform.buildView(
           context,
           widget.controller.onPlatformViewCreated,
+          creationParams: {
+            'url': 'rtsp://192.168.0.105:8554/video',
+            'username': 'admin',
+            'password': 'Autel123',
+          },
         ),
       ),
     );

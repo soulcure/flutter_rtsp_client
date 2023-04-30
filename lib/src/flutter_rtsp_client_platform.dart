@@ -36,12 +36,11 @@ class FlutterRtspClientPlatform extends FlutterRtspClientPlatformInterface {
   @override
   Widget buildView(
     BuildContext context,
-    PlatformViewCreatedCallback onPlatformViewCreated,
-  ) {
+    PlatformViewCreatedCallback onPlatformViewCreated, {
+    required Map<String, dynamic> creationParams,
+  }) {
     // This is used in the platform side to register the view.
     const String viewType = 'flutter_video_plugin/getVideoView';
-    // Pass parameters to the platform side.
-    const Map<String, dynamic> creationParams = <String, dynamic>{};
 
     return PlatformViewLink(
       viewType: viewType,

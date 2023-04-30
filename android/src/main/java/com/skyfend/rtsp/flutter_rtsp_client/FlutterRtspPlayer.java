@@ -5,11 +5,14 @@ import android.net.Uri;
 import android.view.View;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
+import io.flutter.plugin.common.BinaryMessenger;
 import io.flutter.plugin.platform.PlatformView;
+import io.flutter.view.TextureRegistry;
 
 import com.alexvas.rtsp.widget.RtspSurfaceView;
 
@@ -17,8 +20,13 @@ class FlutterRtspPlayer implements PlatformView {
 
     private final RtspSurfaceView rtspSurfaceView;
 
-    FlutterRtspPlayer(@NonNull Context context, int id, @Nullable Object creationParams) {
+    FlutterRtspPlayer(@NonNull Context context, int viewId, Map<String, Object> creationParams,
+                      BinaryMessenger binaryMessenger, TextureRegistry textureRegistry) {
         rtspSurfaceView = new RtspSurfaceView(context);
+        String url = Objects.requireNonNull(creationParams.get("url")).toString();
+        String username = Objects.requireNonNull(creationParams.get("username")).toString();
+        String password = Objects.requireNonNull(creationParams.get("password")).toString();
+        start(url, username, password);
     }
 
     @NonNull
@@ -29,13 +37,12 @@ class FlutterRtspPlayer implements PlatformView {
 
     @Override
     public void dispose() {
+        stop();
     }
 
 
-    public void start(ApiMessage input) {
-        Uri uri = Uri.parse("rtsp://192.168.0.105:8554/video");
-        String username = "admin";
-        String password = "Autel123";
+    public void start(String url, String username, String password) {
+        Uri uri = Uri.parse(url);
         rtspSurfaceView.init(uri, username, password);
         rtspSurfaceView.start(true, false);
 

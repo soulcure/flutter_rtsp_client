@@ -34,8 +34,9 @@ abstract class FlutterRtspClientPlatformInterface extends PlatformInterface {
   /// Returns a widget displaying the video.
   Widget buildView(
     BuildContext context,
-    PlatformViewCreatedCallback onPlatformViewCreated,
-  ) {
+    PlatformViewCreatedCallback onPlatformViewCreated, {
+    required Map<String, dynamic> creationParams,
+  }) {
     throw UnimplementedError('buildView');
   }
 
