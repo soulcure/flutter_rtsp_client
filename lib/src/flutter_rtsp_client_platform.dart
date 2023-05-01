@@ -63,7 +63,7 @@ class FlutterRtspClientPlatform extends FlutterRtspClientPlatformInterface {
           },
         )
           ..addOnPlatformViewCreatedListener(params.onPlatformViewCreated)
-          ..addOnPlatformViewCreatedListener(onPlatformViewCreated)
+          //..addOnPlatformViewCreatedListener(onPlatformViewCreated)
           ..create();
       },
     );
